@@ -54,6 +54,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
+#include "queue.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -77,6 +78,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 
 APP_DATA appData;
+QueueHandle_t msgq;
+int* msg;
+void* receive;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -119,6 +123,7 @@ void APP_Initialize ( void )
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
+    msgq = xQueueCreate(1,4);
 }
 
 
@@ -142,6 +147,11 @@ void APP_Tasks ( void )
         }
 
         /* TODO: implement your application state machine.*/
+        //MESSAGE SEND TEST
+        xQueueSendToFront(msgq, msg, 10);
+        
+        xQueueReceive(msgq, receive, 10);
+        
 
         /* The default state should never be executed. */
         default:
